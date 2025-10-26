@@ -172,8 +172,30 @@ mongodb+srv://username:password@cluster0.xxxxx.mongodb.net/bookdb?retryWrites=tr
 
 ## API Endpoints
 
+### Books API
+- `GET /api/books` - Get all books
+- `GET /api/books/:id` - Get single book by ID
+- `POST /api/books` - Create new book
+- `PUT /api/books/:id` - Update book
+- `DELETE /api/books/:id` - Delete book
+
+### System Endpoints
 - `GET /` - API status
 - `GET /health` - Health check with MongoDB connection status
+
+### Example Book Object
+```json
+{
+  "title": "The Great Book",
+  "author": "John Doe",
+  "isbn": "978-3-16-148410-0",
+  "publishedYear": 2024,
+  "genre": "Fiction",
+  "description": "A great book",
+  "price": 19.99,
+  "inStock": true
+}
+```
 
 ## Environment Variables
 
@@ -223,6 +245,31 @@ All major platforms (Heroku, Vercel, Railway, Render) detect Node.js apps and au
 - Check platform logs
 - Verify `package.json` has correct `start` script
 - Ensure all dependencies are in `dependencies` not `devDependencies`
+
+## Security Considerations
+
+### For Production Deployment
+Before deploying to production, consider adding:
+
+1. **Rate Limiting**: Install and configure `express-rate-limit` to prevent abuse
+   ```bash
+   npm install express-rate-limit
+   ```
+
+2. **Input Validation**: Use libraries like `express-validator` or `joi` for request validation
+
+3. **Security Headers**: Use `helmet` middleware for security headers
+   ```bash
+   npm install helmet
+   ```
+
+4. **Authentication**: Implement JWT or session-based authentication for protected routes
+
+5. **HTTPS**: Always use HTTPS in production (most platforms provide this automatically)
+
+6. **Environment Variables**: Never commit `.env` files. Use platform-specific secret management
+
+The current implementation provides a foundation. Add these security features based on your specific requirements.
 
 ## License
 

@@ -23,6 +23,14 @@ router.get('/', async (req, res) => {
 // GET single book by ID
 router.get('/:id', async (req, res) => {
   try {
+    // Validate MongoDB ObjectId format
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid book ID format'
+      });
+    }
+    
     const book = await Book.findById(req.params.id);
     
     if (!book) {
@@ -66,6 +74,14 @@ router.post('/', async (req, res) => {
 // PUT update book
 router.put('/:id', async (req, res) => {
   try {
+    // Validate MongoDB ObjectId format
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid book ID format'
+      });
+    }
+    
     const book = await Book.findByIdAndUpdate(
       req.params.id,
       req.body,
@@ -95,6 +111,14 @@ router.put('/:id', async (req, res) => {
 // DELETE book
 router.delete('/:id', async (req, res) => {
   try {
+    // Validate MongoDB ObjectId format
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Invalid book ID format'
+      });
+    }
+    
     const book = await Book.findByIdAndDelete(req.params.id);
     
     if (!book) {
